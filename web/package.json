@@ -1,0 +1,38 @@
+{
+  "name": "web",
+  "version": "1.0.0",
+  "license": "GPL-3.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "debug": "NODE_OPTIONS='--inspect' next dev",
+    "export": "next export"
+  },
+  "dependencies": {
+    "@emotion/cache": "^11.9.3",
+    "@emotion/react": "^11.9.3",
+    "@emotion/server": "^11.4.0",
+    "@emotion/styled": "^11.9.3",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.8.6",
+    "@mui/x-data-grid": "^5.12.3",
+    "@mui/x-data-grid-generator": "^5.12.3",
+    "axios": "^0.27.2",
+    "axios-mock-adapter": "^1.21.1",
+    "next": "12.2.0",
+    "next-seo": "^5.4.0",
+    "next-transpile-modules": "^9.0.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.0.0",
+    "@types/react": "18.0.14",
+    "@types/react-dom": "18.0.5",
+    "eslint": "8.18.0",
+    "eslint-config-next": "12.2.0",
+    "typescript": "4.7.4"
+  }
+}

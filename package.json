@@ -1,0 +1,19 @@
+{
+  "name": "e-bookshelf",
+  "version": "1.0.0",
+  "description": "self-hosted ebook management and reading application",
+  "main": "index.js",
+  "repository": "https://github.com/key7men/e-bookshelf",
+  "author": "key7men <key7men@gmail.com>",
+  "license": "GPL-3.0",
+  "private": true,
+  "workspaces": ["web", "api", "extractor"],
+  "scripts": {
+    "extractor": "yarn workspace extractor run start",
+    "web": "yarn workspace web run dev",
+    "web:build": "yarn workspace web run build",
+    "web:export": "yarn workspace web run export",
+    "api": "yarn workspace api run dev",
+    "api:build": "yarn workspace api run build"
+  }
+}

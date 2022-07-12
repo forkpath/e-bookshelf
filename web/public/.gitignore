@@ -76,9 +76,7 @@ typings/
 .cache
 
 # Next.js build output
-.next/
-.swc/
-
+.next
 
 # Nuxt.js build / generate output
 .nuxt
@@ -104,8 +102,3 @@ dist
 
 # TernJS port file
 .tern-port
-
-# ide
-.idea/
-.vscode/
-
