@@ -1,7 +1,7 @@
-import '../styles/globals.css'
+import '@styles/globals.css'
 import type { AppProps } from 'next/app'
 import React, { FC, useEffect } from 'react'
-import { Header } from '../components';
+import { Header } from '@components';
 
 // @ts-ignore
 const Noop: FC = ({ children }) => <>{children}</>

@@ -1,6 +1,6 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { DefaultLayout } from '../../components';
+import { DefaultLayout } from '@components';
 import {
     Avatar, Box,
     Card,

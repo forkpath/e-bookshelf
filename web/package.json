@@ -1,7 +1,7 @@
 {
   "name": "web",
   "version": "1.0.0",
-  "license": "GPL-3.0",
+  "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -21,6 +21,7 @@
     "@mui/x-data-grid-generator": "^5.12.3",
     "axios": "^0.27.2",
     "axios-mock-adapter": "^1.21.1",
+    "lodash": "^4.17.21",
     "next": "12.2.0",
     "next-seo": "^5.4.0",
     "next-transpile-modules": "^9.0.0",
@@ -28,6 +29,7 @@
     "react-dom": "18.2.0"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.182",
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",

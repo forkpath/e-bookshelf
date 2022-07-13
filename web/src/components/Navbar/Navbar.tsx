@@ -18,6 +18,7 @@ import { alpha, styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { debounce } from 'lodash';
 
 const pages = [
     {
@@ -64,6 +65,7 @@ const SearchIconWrapper = styled('div')(({theme}) => ({
 
 const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: 'inherit',
+    width: '100%',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
         // vertical padding + font size from searchIcon
@@ -98,10 +100,18 @@ const Navbar: FC = () => {
         setAnchorElUser(null);
     };
 
-    const goTo = (path: string) => {
-        handleCloseNavMenu();
-        router.push(path)
-    }
+    // 防抖
+    const doSearch = debounce(async (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+        const { value } = event.target;
+        console.log(value);
+        const query = router.query;
+        if (value === '') {
+            delete query.q;
+        } else {
+            query.q = value;
+        }
+        await router.push({query, pathname: '/'});
+    }, 200);
 
     return (
         <AppBar position='sticky' color='transparent' sx={{backgroundColor: 'white', borderBottom: '1px solid rgba(0, 0, 0, .12)', boxShadow: 'none'}}>
@@ -187,6 +197,7 @@ const Navbar: FC = () => {
                         <StyledInputBase
                             placeholder='搜索数据关键字'
                             inputProps={{'aria-label': 'search'}}
+                            onChange={(e) => doSearch(e)}
                         />
                     </Search>
 

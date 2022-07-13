@@ -16,7 +16,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "@config/*": ["src/config/*"],
+      "@components": ["src/components"],
+      "@styles/*": ["styles/*"],
+      "@views/*": ["src/views/*"]
+    }
   },
   "include": ["next-env.d.ts", "src"],
   "exclude": ["node_modules"]

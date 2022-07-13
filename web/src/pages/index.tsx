@@ -1,7 +1,7 @@
 import { MouseEvent, useEffect } from 'react';
 import type { NextPage } from 'next'
 import Head from 'next/head'
-import { DefaultLayout } from '../components';
+import { DefaultLayout } from '@components';
 import {
     Avatar,
     Box, Card, CardActionArea, CardContent, CardHeader, CardMedia, Divider,
@@ -39,6 +39,13 @@ export interface DataSetItem {
     desc: string;
 }
 
+interface ISearchParam {
+    p?: string;
+    q?: string;
+    c?: string;
+    o?: string;
+}
+
 export async function getStaticProps() {
 
 
@@ -53,28 +60,64 @@ export async function getStaticProps() {
     };
 }
 
+const queryData = async (param: ISearchParam) => {
+    await axios({
+        method: 'get',
+        url: 'http://localhost:8088/api/v1/dataset/all',
+        params: param
+    });
+}
+
 // @ts-ignore
 const Home: NextPage = ({ dataList }) => {
 
     const router = useRouter();
-    // category provider order
-    const {c, p, o} = router.query;
 
     const [orderBy, setOrderBy] = useState('');
     const [category, setCategory] = useState('');
     const [provider, setProvider] = useState('');
+    const [query, setQuery] = useState('');
 
-    // 只执行一次
     useEffect(() => {
-        setOrderBy(orderBy ? String(o) : 'trending');
-        setCategory(category ? String(c) : 'all');
-        setProvider(provider ? String(p) : 'all');
-    }, []);
+        const params: ISearchParam = {};
+
+        console.log(router.query.p)
+
+        if (router.query.c) {
+            params.c = String(router.query.c);
+            setCategory(String(router.query.c));
+        } else {
+            setCategory('');
+        }
+
+        if (router.query.p) {
+            params.p = String(router.query.p);
+            setProvider(String(router.query.p));
+        } else {
+            setProvider('');
+        }
+
+        if (router.query.o) {
+            params.o = String(router.query.o);
+            setOrderBy(String(router.query.o));
+        } else {
+            setOrderBy('');
+        }
+
+        if (router.query.q) {
+            params.q = String(router.query.q);
+            setQuery(String(router.query.q));
+        } else {
+            setQuery('');
+        }
+
+        queryData(params);
+    }, [router.query.p, router.query.q, router.query.o, router.query.c]);
 
     const orderOptions = [
         {
             name: '最热门',
-            value: 'trending',
+            value: '',
             icon: <WhatshotOutlined />
         },
         {
@@ -227,13 +270,31 @@ const Home: NextPage = ({ dataList }) => {
     // 热度 最近更新 价格从高到低 价格从低到高
 
     const handleCatItemClick = (event: MouseEvent<HTMLDivElement | MouseEvent<HTMLAnchorElement>>, target: string) => {
-        setCategory(target);
+        const query = router.query;
+        if (target === '') {
+            delete query.c;
+        } else {
+            query.c = target;
+        }
+        router.push({query});
     }
     const handleProviderItemClick = (event: MouseEvent<HTMLDivElement | MouseEvent<HTMLAnchorElement>>, target: string) => {
-        setProvider(target);
+        const query = router.query;
+        if (target === '') {
+            delete query.p;
+        } else {
+            query.p = target;
+        }
+        router.push({query});
     }
     const handleOrderItemClick = (event: MouseEvent<HTMLDivElement | MouseEvent<HTMLAnchorElement>>, target: string) => {
-        setOrderBy(target);
+        const query = router.query;
+        if (target === '') {
+            delete query.o;
+        } else {
+            query.o = target;
+        }
+        router.push({query});
     }
 
     // 进入内页
@@ -257,8 +318,8 @@ const Home: NextPage = ({ dataList }) => {
                             <List component='nav' aria-label='main filters' className='side-bar-list'>
                                 <ListItemButton
                                     sx={{textAlign: 'right'}}
-                                    selected={category === 'all'}
-                                    onClick={(event) => handleCatItemClick(event, 'all')}>
+                                    selected={category === ''}
+                                    onClick={(event) => handleCatItemClick(event, '')}>
                                     <ListItemText primary='全部' />
                                     <ListItemIcon sx={{minWidth: 32, ml: 1}}>
                                         <AllInboxOutlined />
@@ -289,8 +350,8 @@ const Home: NextPage = ({ dataList }) => {
                             <List component='nav' aria-label='main filters' className='side-bar-list'>
                                 <ListItemButton
                                     sx={{textAlign: 'right'}}
-                                    selected={provider === 'all'}
-                                    onClick={(event) => handleProviderItemClick(event, 'all')}>
+                                    selected={provider === ''}
+                                    onClick={(event) => handleProviderItemClick(event, '')}>
                                     <ListItemText primary='全部' />
                                     <ListItemIcon sx={{minWidth: 32, ml: 1}}>
                                         <AllInboxOutlined />
