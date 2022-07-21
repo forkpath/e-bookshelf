@@ -81,7 +81,6 @@ const readFileAsync = promisify(fs.readFile);
             const data = await readFileAsync(targetFile);
             const zip = await JSZip.loadAsync(data);
 
-            console.log('load file');
             console.log('-------- start extracting ----------')
             const metaFileIndex = Object.keys(zip.files).findIndex((item => item.includes("content.opf")));
             const metaFileName = Object.keys(zip.files)[metaFileIndex];
@@ -103,7 +102,7 @@ const readFileAsync = promisify(fs.readFile);
             title = metadata['dc:title'] ? metadata['dc:title'][0] : '';
             author = metadata['dc:author'] ? metadata['dc:author'][0] : '';
             publisher = metadata['dc:publisher'] ? metadata['dc:publisher'][0] : '';
-            link = `${title}.epub`;
+            link = `${uuid()}.epub`;
             date = metadata['dc:date'] ? metadata['dc:date'][0] : '';
             language = metadata['dc:language'] ? metadata['dc:language'][0] : '';
 
@@ -133,7 +132,6 @@ const readFileAsync = promisify(fs.readFile);
                 coverLink = uuid() + cover.substring(cover.lastIndexOf('.'));
                 const coverIndex = Object.keys(zip.files).findIndex((item => item.includes(cover)));
                 const coverName = Object.keys(zip.files)[coverIndex];
-                console.log(coverName);
                 const coverContent = await zip.file(coverName).async('uint8array');
                 await writeFileAsync(path.join(COVERS_DIR, coverLink), coverContent);
             }
@@ -151,7 +149,7 @@ const readFileAsync = promisify(fs.readFile);
 
             console.log(title, 'has been extract data successfully!');
 
-            await shell.mv(targetFile, BOOKS_DIR);
+            await shell.mv(targetFile, `${BOOKS_DIR}/${link}`);
         } catch (e) {
             console.log(e);
             await shell.mv(targetFile, FAILED_DIR);

@@ -2,21 +2,23 @@
 
 // Remove this if you're not using Fullcalendar features
 const withTM = require('next-transpile-modules')([
-  '@mui/x-data-grid'
+    '@mui/x-data-grid',
+    'react-reader',
+    'epubjs'
 ])
 
 module.exports = withTM({
-  trailingSlash: true,
-  reactStrictMode: false,
-  experimental: {
-    esmExternals: false,
-    jsconfigPaths: true // enables it for both jsconfig.json and tsconfig.json
-  },
-  webpack: config => {
-    config.resolve.alias = {
-      ...config.resolve.alias
-    }
+    trailingSlash: true,
+    reactStrictMode: false,
+    experimental: {
+        esmExternals: false,
+        jsconfigPaths: true // enables it for both jsconfig.json and tsconfig.json
+    },
+    webpack: config => {
+        config.resolve.alias = {
+            ...config.resolve.alias
+        }
 
-    return config
-  }
+        return config
+    }
 })

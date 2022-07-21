@@ -7,11 +7,9 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-import AdbIcon from '@mui/icons-material/Adb';
+import { LibraryBooks } from '@mui/icons-material';
 import SearchIcon from '@mui/icons-material/Search';
 import { FC, useState, MouseEvent } from 'react';
 import { alpha, styled } from '@mui/material/styles';
@@ -19,22 +17,14 @@ import InputBase from '@mui/material/InputBase';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { debounce } from 'lodash';
+import { SvgIcon } from '@mui/material';
 
 const pages = [
     {
-        name: '教程',
-        path: '/tutorial'
-    },
-    {
-        name: 'FAQ',
-        path: '/faq'
-    },
-    {
         name: '论坛',
-        path: 'https://forum.memfiredb.com'
+        path: 'https://community.memfiredb.com'
     }
 ];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Search = styled('div')(({theme}) => ({
     position: 'relative',
@@ -83,43 +73,50 @@ const Navbar: FC = () => {
     const router = useRouter();
 
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-    const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: MouseEvent<HTMLElement>) => {
         setAnchorElNav(event.currentTarget);
     };
-    const handleOpenUserMenu = (event: MouseEvent<HTMLElement>) => {
-        setAnchorElUser(event.currentTarget);
-    };
+
 
     const handleCloseNavMenu = () => {
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
-        setAnchorElUser(null);
-    };
 
     // 防抖
     const doSearch = debounce(async (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        const { value } = event.target;
-        console.log(value);
+        const {value} = event.target;
         const query = router.query;
         if (value === '') {
-            delete query.q;
+            delete query.search;
         } else {
-            query.q = value;
+            query.search = value;
         }
         await router.push({query, pathname: '/'});
     }, 200);
 
     return (
-        <AppBar position='sticky' color='transparent' sx={{backgroundColor: 'white', borderBottom: '1px solid rgba(0, 0, 0, .12)', boxShadow: 'none'}}>
+        <AppBar position='sticky' color='transparent'
+                sx={{backgroundColor: 'white', borderBottom: '1px solid rgba(0, 0, 0, .12)', boxShadow: 'none'}}>
             <Container maxWidth='xl'>
                 <Toolbar disableGutters>
 
                     {/* icon与应用名称，在小屏幕下隐藏 */}
-                    <AdbIcon sx={{display: {xs: 'none', md: 'flex'}, mr: 1}} />
+                    <SvgIcon sx={{mr: 1}} viewBox="0 0 490 490">
+                        <g>
+                            <g>
+                                <g>
+                                    <path d='M415,0H75c-5.523,0-10,4.478-10,10v420c0,5.523,4.477,10,10,10h10v40c0,5.523,4.477,10,10,10h40c5.523,0,10-4.477,10-10
+				v-40h200v40c0,5.523,4.477,10,10,10h40c5.523,0,10-4.477,10-10v-40h10c5.523,0,10-4.477,10-10V10C425,4.478,420.523,0,415,0z
+				 M125,470h-20v-30h20V470z M235,420H85V315h150V420z M385,470h-20v-30h20V470z M405,420H255V315h150V420z M405,295H85v-60h320
+				V295z M405,215H85v-10h320V215z M405,185H85v-60h320V185z M405,105H85V95h320V105z M405,75H85V20h320V75z' />
+                                    <rect x='270' y='355' width='30' height='20' />
+                                    <rect x='190' y='355' width='30' height='20' />
+                                </g>
+                            </g>
+                        </g>
+                    </SvgIcon>
                     <Typography
                         variant='h6'
                         noWrap
@@ -128,14 +125,13 @@ const Navbar: FC = () => {
                         sx={{
                             mr: 2,
                             display: {xs: 'none', md: 'flex'},
-                            fontFamily: 'monospace',
-                            fontWeight: 700,
-                            letterSpacing: '.3rem',
+                            fontWeight: 300,
+                            letterSpacing: '.1rem',
                             color: 'black',
                             textDecoration: 'none',
                         }}
                     >
-                        LOGO
+                        E-BookShelf
                     </Typography>
 
                     {/* 页面导航，在小屏幕模式下显示下拉按钮 */}
@@ -195,41 +191,12 @@ const Navbar: FC = () => {
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
-                            placeholder='搜索数据关键字'
+                            placeholder='书籍名称关键字'
                             inputProps={{'aria-label': 'search'}}
                             onChange={(e) => doSearch(e)}
                         />
                     </Search>
 
-                    <Box sx={{flexGrow: 0}}>
-                        <Tooltip title='Open settings'>
-                            <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                <Avatar alt='Remy Sharp' src='/static/images/avatar/2.jpg' />
-                            </IconButton>
-                        </Tooltip>
-                        <Menu
-                            sx={{mt: '45px'}}
-                            id='menu-appbar'
-                            anchorEl={anchorElUser}
-                            anchorOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            keepMounted
-                            transformOrigin={{
-                                vertical: 'top',
-                                horizontal: 'right',
-                            }}
-                            open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
-                        >
-                            {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                                    <Typography textAlign='center'>{setting}</Typography>
-                                </MenuItem>
-                            ))}
-                        </Menu>
-                    </Box>
                 </Toolbar>
             </Container>
         </AppBar>
