@@ -18,10 +18,8 @@
     "jsx": "preserve",
     "incremental": true,
     "paths": {
-      "@config/*": ["src/config/*"],
       "@components": ["src/components"],
       "@styles/*": ["styles/*"],
-      "@views/*": ["src/views/*"]
     }
   },
   "include": ["next-env.d.ts", "src"],
