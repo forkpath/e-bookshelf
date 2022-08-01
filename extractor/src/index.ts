@@ -22,8 +22,8 @@ const readFileAsync = promisify(fs.readFile);
 (async () => {
 
     // 初始化MemFireCloud数据库访问客户端
-    const url = 'your_url'
-    const key = 'your_anon_key'
+    const url = 'your_url';
+    const key = 'your_key';
     const client = createClient(url, key)
 
     /**

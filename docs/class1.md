@@ -50,6 +50,8 @@
 
 ![阿里云盘资料](http://static.langnal.com/ebook-shelf/alidrive.png?x-oss-process=style/k7m)
 
+处于演示程序的目的，仓库中默认随机放了28本epub格式的电子书，无需你从网盘中下载。
+
 ### 提取数据
 
 ```ts
