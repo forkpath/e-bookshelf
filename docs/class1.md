@@ -9,7 +9,7 @@
 
 ### 最终效果
 
-![最终效果](http://static.langnal.com/ebook-shelf/result.gif)
+![最终效果](https://static.langnal.com/ebook-shelf/result.gif)
 
 
 ### 数据元数据信息提取
