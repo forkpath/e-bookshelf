@@ -10,7 +10,7 @@ import { useCallback, useState } from 'react';
 
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-    const res = await axios.get(`http://ebooks.langnal.com/api/v1/book/${context.params!.id}`);
+    const res = await axios.get(`http://localhost:3001/api/v1/book/${context.params!.id}`);
 
     return {
         props: {
@@ -22,7 +22,7 @@ export async function getStaticProps(context: GetStaticPropsContext) {
 
 export async function getStaticPaths() {
 
-    const res = await axios.get(`http://ebooks.langnal.com/api/v1/books/id`);
+    const res = await axios.get(`http://localhost:3001/api/v1/books/id`);
 
     const paths = [];
     for (let i = 0; i < res.data.length; i++) {

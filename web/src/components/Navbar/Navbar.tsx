@@ -7,24 +7,13 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import MenuItem from '@mui/material/MenuItem';
-import { LibraryBooks } from '@mui/icons-material';
 import SearchIcon from '@mui/icons-material/Search';
 import { FC, useState, MouseEvent } from 'react';
 import { alpha, styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { debounce } from 'lodash';
 import { SvgIcon } from '@mui/material';
-
-const pages = [
-    {
-        name: '论坛',
-        path: 'https://community.memfiredb.com'
-    }
-];
 
 const Search = styled('div')(({theme}) => ({
     position: 'relative',
@@ -58,7 +47,6 @@ const StyledInputBase = styled(InputBase)(({theme}) => ({
     width: '100%',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)})`,
         transition: theme.transitions.create('width'),
         width: '100%',
@@ -164,25 +152,7 @@ const Navbar: FC = () => {
                                 display: {xs: 'block', md: 'none'},
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem key={page.name} href={page.path}>
-                                    <Link href={page.path} onClick={handleCloseNavMenu}>
-                                        <a>{page.name}</a>
-                                    </Link>
-                                </MenuItem>
-                            ))}
                         </Menu>
-                    </Box>
-
-                    {/* 页面导航，不是小屏幕则正常横向显示 */}
-                    <Box sx={{display: {xs: 'none', md: 'flex'}}}>
-                        {pages.map((page) => (
-                            <Button key={page.name} sx={{color: 'black'}}>
-                                <Link href={page.path} key={page.name}>
-                                    <a>{page.name}</a>
-                                </Link>
-                            </Button>
-                        ))}
                     </Box>
 
                     {/* 搜索框 */}

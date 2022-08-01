@@ -1,5 +1,3 @@
-import {readFile} from "fs";
-
 const fs = require('fs');
 const path = require('path');
 
@@ -9,38 +7,24 @@ const xml2js = require('xml2js');
 const {v4: uuid} = require('uuid');
 const {promisify} = require('util');
 
+import { createClient } from '@supabase/supabase-js'
+
+
 const xmlParserWithoutAttr = new xml2js.Parser({
     ignoreAttrs: true
 });
 
 const xmlParser = new xml2js.Parser({});
 
-
-import {Column, createConnection, PrimaryColumn} from "typeorm";
-import {Book} from './entity';
-
 const writeFileAsync = promisify(fs.writeFile);
 const readFileAsync = promisify(fs.readFile);
 
 (async () => {
 
-    // 建立数据库连接
-    await createConnection(
-        {
-            name: "default",
-            type: "postgres",
-            host: "localhost",
-            port: 5432,
-            username: "spider_user",
-            password: "spider_passwd",
-            database: "spider",
-            synchronize: true,
-            logging: false,
-            entities: [Book],
-            migrations: [],
-            subscribers: [],
-        }
-    )
+    // 初始化MemFireCloud数据库访问客户端
+    const url = 'your_url'
+    const key = 'your_anon_key'
+    const client = createClient(url, key)
 
     /**
      * 具体实现方式：
@@ -82,7 +66,7 @@ const readFileAsync = promisify(fs.readFile);
             const zip = await JSZip.loadAsync(data);
 
             console.log('-------- start extracting ----------')
-            const metaFileIndex = Object.keys(zip.files).findIndex((item => item.includes("content.opf")));
+            const metaFileIndex = Object.keys(zip.files).findIndex((item => item.includes('content.opf')));
             const metaFileName = Object.keys(zip.files)[metaFileIndex];
             let coverLink = '';
             let cover = '';
@@ -136,18 +120,27 @@ const readFileAsync = promisify(fs.readFile);
                 await writeFileAsync(path.join(COVERS_DIR, coverLink), coverContent);
             }
 
-            const book = new Book();
-            book.id = id;
-            book.title = title;
-            book.author = author;
-            book.publisher = publisher;
-            book.link = link;
-            book.date = date;
-            book.language = language;
-            book.coverLink = coverLink;
-            await book.save();
-
-            console.log(title, 'has been extract data successfully!');
+            try {
+                const {error} = await client.from('book').insert([
+                    {
+                        id,
+                        title,
+                        author,
+                        publisher,
+                        link,
+                        date,
+                        language,
+                        cover_link: coverLink
+                    }
+                ])
+                if (error) {
+                    console.log(title, 'write to db failed!');
+                } else {
+                    console.log(title, 'has been extract data successfully!');
+                }
+            } catch (e) {
+                console.log(title, 'write to db failed!');
+            }
 
             await shell.mv(targetFile, `${BOOKS_DIR}/${link}`);
         } catch (e) {
@@ -157,7 +150,6 @@ const readFileAsync = promisify(fs.readFile);
 
         i++;
     } // end while
-
 
 })()
 

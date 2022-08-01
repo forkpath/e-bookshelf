@@ -27,7 +27,7 @@ interface ISearchParam {
 const queryData = async (param: ISearchParam) => {
     const res = await axios({
         method: 'get',
-        url: 'http://ebooks.langnal.com/api/v1/books',
+        url: 'http://localhost:3001/api/v1/books',
         params: param
     });
     return {
@@ -84,7 +84,7 @@ const Home: NextPage = ({}) => {
 
     // 下载
     const downloadBook = (id: string) => {
-        window.open(`http://ebooks.langnal.com/api/v1/download/${id}`, '_blank');
+        window.open(`http://localhost:3001/api/v1/download/${id}`, '_blank');
     }
 
     // 在线阅读

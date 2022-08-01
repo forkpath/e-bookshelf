@@ -12,8 +12,6 @@
     "extractor": "yarn workspace extractor run start",
     "web": "yarn workspace web run dev",
     "web:build": "yarn workspace web run build",
-    "web:export": "yarn workspace web run export",
-    "api": "yarn workspace api run dev",
-    "api:build": "yarn workspace api run build"
+    "web:export": "yarn workspace web run export"
   }
 }
