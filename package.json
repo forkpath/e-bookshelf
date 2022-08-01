@@ -9,9 +9,6 @@
   "private": true,
   "workspaces": ["web", "api", "extractor"],
   "scripts": {
-    "extractor": "yarn workspace extractor run start",
-    "web": "yarn workspace web run dev",
-    "web:build": "yarn workspace web run build",
-    "web:export": "yarn workspace web run export"
+    "extractor": "yarn workspace extractor run start"
   }
 }

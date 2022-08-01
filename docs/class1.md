@@ -4,11 +4,12 @@
 
 系列文章介绍了如何从epub格式文件中提取结构化数据，并存入在线数据库（MemFireDB），进而利用该数据库自带的接口生成能力，在无需后端编码的情况下，完成自用电子图书馆的开发。
 
+### 仓库地址
+[https://github.com/key7men/e-bookshelf](https://github.com/key7men/e-bookshelf)
+
 ### 最终效果
 
 ![最终效果](http://static.langnal.com/ebook-shelf/result.gif)
-
-仓库地址: [https://github.com/key7men/e-bookshelf](https://github.com/key7men/e-bookshelf)
 
 
 ### 数据元数据信息提取
