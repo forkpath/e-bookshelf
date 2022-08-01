@@ -7,7 +7,7 @@
 ### 最终效果
 
 ![最终效果](http://static.langnal.com/ebook-shelf/result.gif)
-仓库地址: []()
+仓库地址: [https://github.com/key7men/e-bookshelf](https://github.com/key7men/e-bookshelf)
 
 
 ### 数据元数据信息提取
@@ -19,23 +19,22 @@
 其中`OEBPS`文件夹下的`content.opf`文件是标准的`XML`文件，文件的根元素是**<package>**，该文件的`<metadata>`标签下的内容包含了许多书籍元数据信息，如下图所示：
 
 ```xml
-
 <meta name= cover content="cover.jpg">书籍封面
-    <dc:title>书名
-        <dc:creator>制作人
-            <dc:subject>主题关键词
-                <dc:description>描述
-                    <dc:publisher>出版商
-                        <dc:contributor>贡献者
-                            <dc:date>发布日期
-                                <dc:type>类型
-                                    <dc:format>格式
-                                        <dc:identifier>唯一标识符
-                                            <dc:source>来源
-                                                <dc:language>语言
-                                                    <dc:relation>关联
-                                                        <dc:coverage>覆盖范围
-                                                            <dc:rights>权责描述
+<dc:title>书名
+<dc:creator>制作人
+<dc:subject>主题关键词
+<dc:description>描述
+<dc:publisher>出版商
+<dc:contributor>贡献者
+<dc:date>发布日期
+<dc:type>类型
+<dc:format>格式
+<dc:identifier>唯一标识符
+<dc:source>来源
+<dc:language>语言
+<dc:relation>关联
+<dc:coverage>覆盖范围
+<dc:rights>权责描述
 ```
 
 既然每本epub格式的电子书都包含书籍元数据信息，那就可以写个程序提取这些数据信息存入到数据库中，后续写个接口来检索就行。
