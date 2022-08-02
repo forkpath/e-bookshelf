@@ -17,12 +17,8 @@ const Footer: FC = () => {
                 <Typography sx={{mr: 2, fontSize: {xs: '0.75rem', sm: '1rem'}}}>
                     Copyright
                     {`© ${new Date().getFullYear()} `}
-                    <Link target='_blank' href='https://memfiredb.com/'>
-                        <a style={{color: 'black'}}>memfiredb.com{' '}</a>
-                    </Link>
-                    版权所有 ICP 证:{' '}
-                    <Link target='_blank' href='https://beian.miit.gov.cn/'>
-                        <a style={{color: 'black'}}>鄂ICP备17029935号-2</a>
+                    <Link target='_blank' href='https://ipfs.cc/'>
+                        <a style={{color: 'black'}}>key7men@gmail.com</a>
                     </Link>
                 </Typography>
             </Box>

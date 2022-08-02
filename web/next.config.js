@@ -14,6 +14,14 @@ module.exports = withTM({
         esmExternals: false,
         jsconfigPaths: true // enables it for both jsconfig.json and tsconfig.json
     },
+    async rewrites() {
+        return [
+            {
+                source: '/api/:path*',
+                destination: 'http://localhost:3001/api/:path*' // Proxy to Backend
+            }
+        ]
+    },
     webpack: config => {
         config.resolve.alias = {
             ...config.resolve.alias

@@ -5,10 +5,9 @@ import cors from 'cors';
 import { Book } from './entity';
 import { AppDataSource } from './data-source';
 import { Like } from 'typeorm';
-import path from 'path';
 
 dotenv.config();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3001;
 
 AppDataSource.initialize().then(async () => {
 

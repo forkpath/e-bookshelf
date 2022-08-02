@@ -27,7 +27,7 @@ interface ISearchParam {
 const queryData = async (param: ISearchParam) => {
     const res = await axios({
         method: 'get',
-        url: 'http://ebooks.langnal.com/api/v1/books',
+        url: '/api/v1/books',
         params: param
     });
     return {
@@ -84,7 +84,7 @@ const Home: NextPage = ({}) => {
 
     // 下载
     const downloadBook = (id: string) => {
-        window.open(`http://ebooks.langnal.com/api/v1/download/${id}`, '_blank');
+        window.open(`/api/v1/download/${id}`, '_blank');
     }
 
     // 在线阅读
@@ -105,7 +105,7 @@ const Home: NextPage = ({}) => {
                             <CardActionArea onClick={() => goToDetail(item.id)}>
                                 <CardHeader
                                     avatar={<Avatar sx={{backgroundColor: '#333', fontSize: '0.8rem'}} aria-label='format'>epub</Avatar>} />
-                                <CardMedia component='img' image={`http://ebooks.langnal.com/cdn/covers/${item.coverLink}`} alt={item.title}
+                                <CardMedia component='img' image={item.coverLink} alt={item.title}
                                            sx={{height: {xs: 320, sm: 240, lg: 320}}} />
                                 <CardContent>
                                     <Typography variant='body2' color='text.primary' sx={{

@@ -1,20 +1,20 @@
 {
-  "title": "数据分享市场",
-  "titleTemplate": "%s - 数据分享市场",
-  "description": "基于数据库的数据分享市场 - memfiredb.com",
+  "title": "电子书永久免费阅读与下载站",
+  "titleTemplate": "%s - 电子书永久免费阅读与下载站",
+  "description": "电子书永久免费阅读与下载站",
   "openGraph": {
-    "title": "数据分享市场 | 由memfiredb驱动",
-    "description": "基于数据库的数据分享市场 - memfiredb.com",
+    "title": "电子书 | 永久免费阅读与下载",
+    "description": "从epub文件中提取元数据构建的电子书网站",
     "type": "website",
     "locale": "zh_CN",
-    "url": "https://search.memfiredb.com",
-    "site_name": "数据分享市场",
+    "url": "https://ebook.ipfs.cc",
+    "site_name": "免费电子书网站",
     "images": [
       {
         "url": "/card.png",
         "width": 800,
         "height": 600,
-        "alt": "数据分享市场"
+        "alt": "电子书永久免费阅读与下载站"
       }
     ]
   }

@@ -1,5 +1,3 @@
-import {readFile} from "fs";
-
 const fs = require('fs');
 const path = require('path');
 
@@ -16,8 +14,8 @@ const xmlParserWithoutAttr = new xml2js.Parser({
 const xmlParser = new xml2js.Parser({});
 
 
-import {Column, createConnection, PrimaryColumn} from "typeorm";
-import {Book} from './entity';
+import { createConnection } from 'typeorm';
+import { Book } from './entity';
 
 const writeFileAsync = promisify(fs.writeFile);
 const readFileAsync = promisify(fs.readFile);
@@ -27,13 +25,13 @@ const readFileAsync = promisify(fs.readFile);
     // 建立数据库连接
     await createConnection(
         {
-            name: "default",
-            type: "postgres",
-            host: "localhost",
+            name: 'default',
+            type: 'postgres',
+            host: 'localhost',
             port: 5432,
-            username: "spider_user",
-            password: "spider_passwd",
-            database: "spider",
+            username: 'spider_user',
+            password: 'spider_passwd',
+            database: 'spider',
             synchronize: true,
             logging: false,
             entities: [Book],
@@ -82,7 +80,7 @@ const readFileAsync = promisify(fs.readFile);
             const zip = await JSZip.loadAsync(data);
 
             console.log('-------- start extracting ----------')
-            const metaFileIndex = Object.keys(zip.files).findIndex((item => item.includes("content.opf")));
+            const metaFileIndex = Object.keys(zip.files).findIndex((item => item.includes('content.opf')));
             const metaFileName = Object.keys(zip.files)[metaFileIndex];
             let coverLink = '';
             let cover = '';

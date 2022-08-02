@@ -1,7 +1,7 @@
 import NextHead from 'next/head'
 import { DefaultSeo } from 'next-seo'
 import config from '@config/seo.json'
-import { FC } from "react";
+import { FC } from 'react';
 
 const Header: FC = () => {
   return (
