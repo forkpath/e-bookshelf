@@ -5,28 +5,28 @@ import { DefaultLayout } from '@components';
 import {
     Container,
 } from '@mui/material';
-import axios from 'axios';
 import { useCallback, useState } from 'react';
+import { queryBookLink, queryIds, url } from '../../api';
 
 
 export async function getStaticProps(context: GetStaticPropsContext) {
-    const res = await axios.get(`http://ebooks.langnal.com/api/v1/book/${context.params!.id}`);
+    const book = await queryBookLink(context.params!.id);
 
     return {
         props: {
-            title: res.data.title,
-            link: res.data.link
+            title: book.title,
+            link: book.link
         }
     }
 }
 
 export async function getStaticPaths() {
 
-    const res = await axios.get(`http://ebooks.langnal.com/api/v1/books/id`);
+    const ids = await queryIds();
 
     const paths = [];
-    for (let i = 0; i < res.data.length; i++) {
-        paths.push({params: res.data[i]})
+    for (let i = 0; i < ids.length; i++) {
+        paths.push({params: ids[i]})
     }
 
     return {
@@ -38,7 +38,7 @@ export async function getStaticPaths() {
 // @ts-ignore
 const BookDetail: NextPage = ({title, link}) => {
 
-    const [location, setLocation] = useState('');
+    const [location, setLocation] = useState('2');
 
     const onLocationChanged = useCallback(
         (location: string) => setLocation(location),
@@ -55,7 +55,7 @@ return (
                 <ReactReader
                     location={location}
                     locationChanged={onLocationChanged}
-                    url={`http://ebooks.langnal.com/cdn/books/${link}`}
+                    url={`${url}/storage/v1/object/public/books/${link}`}
                 />
             </div>
         </Container>

@@ -9,32 +9,7 @@ import {
 import { AutoStoriesOutlined, DownloadForOfflineOutlined } from '@mui/icons-material';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
-import axios from 'axios';
-
-interface BookItem {
-    id: string;
-    title: string;
-    coverLink: string;
-    date: string;
-    publisher: string;
-}
-
-interface ISearchParam {
-    page?: string;
-    search?: string;
-}
-
-const queryData = async (param: ISearchParam) => {
-    const res = await axios({
-        method: 'get',
-        url: 'http://ebooks.langnal.com/api/v1/books',
-        params: param
-    });
-    return {
-        data: res.data[0],
-        count: res.data[1]
-    }
-}
+import { BookItem, ISearchParam, queryBooks, url } from '../api';
 
 // @ts-ignore
 const Home: NextPage = ({}) => {
@@ -47,11 +22,14 @@ const Home: NextPage = ({}) => {
     const [search, setSearch] = useState('');
 
     useEffect(() => {
-        const params: ISearchParam = {};
+        const params: ISearchParam = {
+            page: 1,
+            search: ''
+        };
 
 
         if (router.query.page) {
-            params.page = String(router.query.page);
+            params.page = Number(router.query.page);
             setPage(Number(router.query.page));
         } else {
             setPage(1);
@@ -64,9 +42,9 @@ const Home: NextPage = ({}) => {
             setSearch('');
         }
 
-        queryData(params).then(res => {
-            setDataList(res.data);
-            setTotal(Math.ceil(res.count / 24));
+        queryBooks(params).then(res => {
+            setDataList(res.data || []);
+            setTotal(Math.ceil(Number(res.count) / 24));
         })
     }, [router.query.search, router.query.page]);
 
@@ -83,8 +61,8 @@ const Home: NextPage = ({}) => {
     }
 
     // 下载
-    const downloadBook = (id: string) => {
-        window.open(`http://ebooks.langnal.com/api/v1/download/${id}`, '_blank');
+    const downloadBook = (link: string) => {
+        window.open(`${url}/storage/v1/object/public/books/${link}`, '_blank');
     }
 
     // 在线阅读
@@ -105,7 +83,7 @@ const Home: NextPage = ({}) => {
                             <CardActionArea onClick={() => goToDetail(item.id)}>
                                 <CardHeader
                                     avatar={<Avatar sx={{backgroundColor: '#333', fontSize: '0.8rem'}} aria-label='format'>epub</Avatar>} />
-                                <CardMedia component='img' image={`http://ebooks.langnal.com/cdn/covers/${item.coverLink}`} alt={item.title}
+                                <CardMedia component='img' image={`${url}/storage/v1/object/public/covers/${item.cover_link}`} alt={item.title}
                                            sx={{height: {xs: 320, sm: 240, lg: 320}}} />
                                 <CardContent>
                                     <Typography variant='body2' color='text.primary' sx={{
@@ -132,7 +110,7 @@ const Home: NextPage = ({}) => {
                             <CardActions sx={{float: 'right'}}>
                                 <Button aria-label='download' sx={{color: '#000', borderColor: '#000', ':hover': 'red'}}
                                         startIcon={<DownloadForOfflineOutlined />} onClick={(e) => {
-                                    downloadBook(item.id)
+                                    downloadBook(item.link)
                                 }}>直接下载
                                 </Button>
                                 <Button aria-label='read online' sx={{color: '#000', borderColor: '#000'}}

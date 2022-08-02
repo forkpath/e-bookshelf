@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Footer, Navbar } from '../index';
+import { Navbar } from '../index';
 
 interface Props {
     children: React.ReactNode;
@@ -10,7 +10,6 @@ const DefaultLayout: FC<Props> = ({children}) => {
         <>
             <Navbar />
             <main style={{minHeight: 'calc(100vh - 122px)'}}>{children}</main>
-            <Footer />
         </>
     )
 }

@@ -7,13 +7,10 @@
   "author": "key7men <key7men@gmail.com>",
   "license": "GPL-3.0",
   "private": true,
-  "workspaces": ["web", "api", "extractor"],
+  "workspaces": ["web", "extractor"],
   "scripts": {
-    "extractor": "yarn workspace extractor run start",
     "web": "yarn workspace web run dev",
     "web:build": "yarn workspace web run build",
-    "web:export": "yarn workspace web run export",
-    "api": "yarn workspace api run dev",
-    "api:build": "yarn workspace api run build"
+    "web:export": "yarn workspace web run export"
   }
 }
