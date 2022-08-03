@@ -1,11 +1,14 @@
 const fs = require('fs');
 const path = require('path');
+const dotenv = require('dotenv');
 
 const shell = require('shelljs');
 const JSZip = require('jszip');
 const xml2js = require('xml2js');
 const {v4: uuid} = require('uuid');
 const {promisify} = require('util');
+
+dotenv.config()
 
 const xmlParserWithoutAttr = new xml2js.Parser({
     ignoreAttrs: true
@@ -25,13 +28,13 @@ const readFileAsync = promisify(fs.readFile);
     // 建立数据库连接
     await createConnection(
         {
-            name: 'default',
+            name: process.env.DBNAME,
             type: 'postgres',
-            host: 'localhost',
-            port: 5432,
-            username: 'spider_user',
-            password: 'spider_passwd',
-            database: 'spider',
+            host: process.env.DBHOST,
+            port: Number(process.env.DBPORT),
+            username: process.env.DBUSER,
+            password: process.env.DBPASSWD,
+            database: process.env.DBNAME,
             synchronize: true,
             logging: false,
             entities: [Book],

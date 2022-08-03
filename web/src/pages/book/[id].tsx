@@ -38,7 +38,7 @@ export async function getStaticPaths() {
 // @ts-ignore
 const BookDetail: NextPage = ({title, link}) => {
 
-    const [location, setLocation] = useState('');
+    const [location, setLocation] = useState('2');
 
     const onLocationChanged = useCallback(
         (location: string) => setLocation(location),

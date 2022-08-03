@@ -7,7 +7,7 @@ import { AppDataSource } from './data-source';
 import { Like } from 'typeorm';
 
 dotenv.config();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.APIPORT || 3001;
 
 AppDataSource.initialize().then(async () => {
 
